@@ -24,8 +24,8 @@ class User extends Authenticatable
     'password',
     'phone',
     'address',
-    'business_name',
-    'has_delivery',
+    // 'business_name',
+    // 'has_delivery',
     'role',
     ];
 
@@ -51,7 +51,21 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-    public function products() {
+
+
+    public function customer() 
+    {
+        return $this->hasOne(Customer::class);
+    }
+    
+    public function farmer() 
+    {
+        return $this->hasOne(Farmer::class);
+    }
+
+
+    public function products()
+     {
     return $this->hasMany(Product::class);
 }
 

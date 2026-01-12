@@ -1,19 +1,30 @@
 <?php
 
-namespace App\Models;
+    namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+    use Illuminate\Database\Eloquent\Model;
 
-class Product extends Model
-{
-    //
-    protected $fillable = ['name', 'description', 'price', 'quantity', 'image', 'is_available', 'user_id', 'category_id'];
+    class Product extends Model
+    {
+        
+        protected $fillable = [
+            'name',
+            'description',
+            'price',
+            'image',
+            'is_available',
+            'user_id',
+            'category_id'];
 
-public function user() {
-    return $this->belongsTo(User::class); // المزارع صاحب المنتج
-}
 
-public function category() {
-    return $this->belongsTo(Category::class);
-}
-}
+    public function user() 
+    {
+        return $this->belongsTo(User::class);
+    }
+            
+
+        public function category()
+    {
+        return $this->belongsTo(Category::class);
+    }
+    }

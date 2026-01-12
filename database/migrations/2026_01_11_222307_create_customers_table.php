@@ -11,19 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('carts', function (Blueprint $table) {
-         $table->id();
-        $table->integer('user_id');  
-        $table->enum('status', ['ordered', 'active'])->default('active'); 
-        $table->timestamps();
+        Schema::create('customers', function (Blueprint $table) {
+            $table->id();
+            $table->integer('user_id');
+            $table->timestamps();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
+ 
     public function down(): void
     {
-        Schema::dropIfExists('carts');
+        Schema::dropIfExists('customers');
     }
 };

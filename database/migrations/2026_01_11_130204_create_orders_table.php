@@ -6,16 +6,14 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+ 
     public function up(): void
     {
         Schema::create('orders', function (Blueprint $table) {
         $table->id();
-        $table->foreignId('user_id')->constrained()->onDelete('cascade'); 
+        $table->integer('user_id'); 
         $table->decimal('total', 10, 2); 
-        $table->string('status')->default('pending'); 
+        $table->enum('status', ['pending', 'completed', 'canceled'])->default('pending');
         $table->timestamps();
         });
     }
