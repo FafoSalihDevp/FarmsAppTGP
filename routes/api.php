@@ -31,6 +31,7 @@ Route::post("/logout" , [AuthController::class, 'logout']);
 
 
 
+<<<<<<< HEAD
 
 Route::prefix('farmer')->group(function () {
     
@@ -41,12 +42,37 @@ Route::prefix('farmer')->group(function () {
     Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource('product', FarmerProductController::class);
         Route::apiResource('category', FarmerCategoryController::class)->only('index');
+=======
+// Route::prefix('farmer')->middleware('auth:sanctum')->group(function() {
+//     // ====== register =======
+//     Route::post('/register', [FarmerController::class, 'register']);
+
+//     // ====== product & category =======
+//     Route::apiResource('product', FarmerProductController::class);
+//     Route::apiResource('category',FarmerCategoryController::class)->only('index');
+
+//     // ====== order =======
+//     Route::get('/order', [FarmerOrderController::class, 'showOrder']);
+//     Route::put('/order/{id}/status', [FarmerOrderController::class, 'updateStatus']);
+
+// --------- Farmer Route  ----------
+Route::prefix('farmer')->group(function () {
+    // ====== register =======
+    Route::post('/register', [FarmerController::class, 'register']);
+    
+    Route::middleware('auth:sanctum')->group(function () {
+        // ====== product & category =======
+        Route::apiResource('product', FarmerProductController::class);
+        Route::apiResource('category', FarmerCategoryController::class)->only('index');
+    // ====== order =======
+>>>>>>> 532066902fac14e345c78de3683b118e68d8c383
         Route::get('/order', [FarmerOrderController::class, 'showOrder']);
         Route::put('/order/{id}/status', [FarmerOrderController::class, 'updateStatus']);
     });
 });
 
 
+<<<<<<< HEAD
 
 Route::prefix('customer')->group(function () {
     
@@ -54,17 +80,29 @@ Route::prefix('customer')->group(function () {
     // URL: api/farmer/register
     Route::post('/register', [CustomerControlller::class, 'register']);
 
+=======
+// --------- Customer Route  ----------
+Route::prefix('customer')->group(function () {
+    // ====== register =======
+    Route::post('/register', [CustomerControlller::class, 'register']);
+>>>>>>> 532066902fac14e345c78de3683b118e68d8c383
   
     Route::middleware('auth:sanctum')->group(function () {
          // ====== product & category =======
        Route::apiResource('product', CustomerProductController::class);
        Route::apiResource('category',CustomerCategoryController::class)->only('index');
+<<<<<<< HEAD
 
+=======
+>>>>>>> 532066902fac14e345c78de3683b118e68d8c383
      // ====== carts =======
       Route::get('/cart', [CustomerCartController::class, 'myCart']);
       Route::post('/cart/add', [CustomerCartController::class,'addToCart']);
       Route::delete('/cart/item/{id}', [CustomerCartController::class,'removeItem']);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 532066902fac14e345c78de3683b118e68d8c383
     // ====== orders =======
      Route::post('/checkout', [CustomerOrderController::class, 'checkout']);
      Route::get('/myorders', [CustomerOrderController::class, 'myOrders']);
@@ -74,4 +112,7 @@ Route::prefix('customer')->group(function () {
 
 
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 532066902fac14e345c78de3683b118e68d8c383
