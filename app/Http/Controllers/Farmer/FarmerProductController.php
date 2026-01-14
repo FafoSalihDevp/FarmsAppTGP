@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\User;
 use App\Models\Product;
-// use Illuminate\Container\Attributes\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -143,48 +142,28 @@ class FarmerProductController extends Controller
         'message' => 'updated completed',
         'product' => $product
     ]);
-        // $user = Auth::user();
-        // $Pro = $user->products()->find($id);
-
-        // if (!$Pro) {
-        //     return response()->json([
-        //         'message' => 'product is not found'
-        //     ], 404);
-        // }
-
-        // $inputs = $request->validate([
-        //     'name' => ['sometimes','max:255'],
-        //     'description' => ['sometimes'],
-        //     'price' => ['sometimes','numeric','min:0'],
-        //     'image' => ['nullable'],
-        //     'is_available' => ['sometimes','boolean'],
-        //     'category_id' => ['sometimes','exists:categories,id'],
-        // ]);
-
-        // $Pro->update($inputs);
-
-        // return response()->json([
-        //     'message' => 'product updated',
-        //     'product' => $Pro
-        // ]);
+        
     }
 
    
-    public function destroy(string $id)
-    {
-         $user = Auth::user();
-        $Pro = $user->products()->find($id);
+   public function destroy($id)
+{
+    // 1. البحث عن المنتج (Product) وليس الفئة (Category)
+    // نتحقق أيضاً أن المنتج يخص المستخدم الحالي لزيادة الأمان
+    $product = Product::where('id', $id)->where('user_id', auth()->id())->first();
 
-        if (!$Pro) {
-            return response()->json([
-                'message' => 'product is not found'
-            ], 404);
-        }
-
-        $Pro->delete();
-
-        return response()->json([
-            'message' => 'product is deleted'
-        ]);
+    if (!$product) {
+        return response()->json(['message' => 'المنتج غير موجود أو لا تملك صلاحية حذفه'], 404);
     }
+
+    // 2. حذف الصورة الحقيقية من المجلد قبل حذف البيانات
+    if ($product->image) {
+        Storage::disk('public')->delete($product->image);
+    }
+
+    // 3. حذف السجل من قاعدة البيانات
+    $product->delete();
+
+    return response()->json(['message' => 'تم حذف المنتج بنجاح'], 200);
+}
 }

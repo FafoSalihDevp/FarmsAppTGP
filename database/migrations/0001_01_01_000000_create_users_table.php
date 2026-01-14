@@ -19,8 +19,6 @@ return new class extends Migration
         $table->string('password'); 
         $table->string('phone')->nullable();;
         $table->string('address')->nullable();
-        // $table->string('business_name')->nullable(); 
-        // $table->boolean('has_delivery')->default(false);
         $table->enum('role', ['farmer', 'customer']);
         $table->rememberToken();
         $table->timestamps();
